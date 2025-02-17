@@ -1,0 +1,7 @@
+# TODO List for mnist-scale-serve Project
+
+- [ ] Understand local API serving
+- [ ] Understand containerisation - images, volumes etc.
+- [ ] Implement a simple frontend - also to be packaged? explore best practice
+- [ ] Explore Kubernetes
+- [ ] Refine the MLOps process
