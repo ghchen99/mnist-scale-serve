@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mnist-classifier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mnist-classifier
+  template:
+    metadata:
+      labels:
+        app: mnist-classifier
+    spec:
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: mnist-model-pvc
+      containers:
+      - name: mnist-classifier
+        image: mnist-classifier:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+        volumeMounts:
+        - name: model-storage
+          mountPath: /app/models
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
